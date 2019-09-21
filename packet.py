@@ -14,7 +14,7 @@ class Packet():
     @staticmethod
     def pick_id():
         min_id = 0
-        max_id = 100
+        max_id = 14
         exclude= unacknowledged_packets
         randInt = randint(min_id, max_id)
         if randInt in exclude:
@@ -34,7 +34,20 @@ class Packet():
 
     @staticmethod
     def checksum(self):
-        
+        checksum = 0
+        id_binary = format(self.id, '#010b')
+        type_binary = format(self.p_type, '#010b')
+        temp = int(id_binary+''+type_binary.id,2)
+        checksum = temp ^ checksum
+        checksum = self.length ^ checksum
+        temp_data = self.data
+        while(temp_data){
+            temp_data_bin = format(temp_data, '#018b')
+            checksum = int(temp_data_bin,2) ^ checksum
+            temp_data = temp_data >> 16
+        }
+
+
 
 
 
