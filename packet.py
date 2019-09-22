@@ -3,7 +3,7 @@ from pickle import dumps, loads
 
 
 class Packet():
-    unacknowledged_packets = []
+    unacknowledged_packet_ids = []
 
     def __init__(self, p_type, id, seq, length, data):
         self.id = id
@@ -19,12 +19,13 @@ class Packet():
         elif p_type == 'FIN-ACK':
             self.p_type = 0x3
         self.checksum = Packet.checksum(self)
+        self.unacknowledged_packet_ids.append(self.id)
 
-    def __cmp__(self, other):
-        return cmp((self.seq, self.id), (other.seq, other.id))
+    def __eq__(self, other):
+        return self.seq == other.seq and self.id == other.id
 
     def __str__(self):
-        if (type(self.data) == 'string'):
+        if (isinstance(self.data, str)):
             data = self.data
         else:
             data = self.data.decode('UTF-8')
@@ -51,7 +52,7 @@ class Packet():
     def pick_id(cls):
         min_id = 0
         max_id = 14
-        exclude = cls.unacknowledged_packets
+        exclude = cls.unacknowledged_packet_ids
         rand_int_id = randint(min_id, max_id)
         while rand_int_id in exclude:
             rand_int_id = randint(min_id, max_id)
@@ -72,7 +73,7 @@ class Packet():
 
         checksum = packet.length ^ checksum
 
-        if (type(packet.data) == 'string'):
+        if (isinstance(packet.data, str)):
             temp_data = packet.data.encode('UTF-8')
         else:
             temp_data = packet.data
