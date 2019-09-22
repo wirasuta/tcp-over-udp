@@ -97,7 +97,7 @@ class TCPSend:
 
         stop_flags = []
         send_threads = []
-        base_port = randint(1025, 13336)
+        base_port = randint(1025, 65534)
 
         for idx, single_file_packets in enumerate(all_packets):
             stop_flag = Event()

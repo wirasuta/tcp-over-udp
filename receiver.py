@@ -100,7 +100,9 @@ class TCPRecvThread(Thread):
 
             if reply.get_type() == 'FIN-ACK':
                 filename = curr_tcp_recv.write_out()
-                self.all_tcp_recv.remove(curr_tcp_recv)
+
+                if curr_tcp_recv in self.all_tcp_recv:
+                    self.all_tcp_recv.remove(curr_tcp_recv)
                 print(
                     f'[i] Written file from {self.sender_addr} with id {packet_id} to {filename}')
         else:
