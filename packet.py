@@ -43,6 +43,12 @@ class Packet():
         elif self.p_type == 0x3:
             return 'FIN-ACK'
 
+    def get_reply(self):
+        if self.get_type() == 'FIN':
+            return Packet('FIN-ACK', self.id, self.seq, 0, '')
+        else:
+            return Packet('ACK', self.id, self.seq, 0, '')
+
     def to_bytes(self):
         return dumps(self)
 
