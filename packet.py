@@ -25,13 +25,8 @@ class Packet():
         return self.seq == other.seq and self.id == other.id
 
     def __str__(self):
-        if (isinstance(self.data, str)):
-            data = self.data
-        else:
-            data = self.data.decode('UTF-8')
-
         string_rep = "seq: " + str(self.seq) + ", id: " + str(self.id) + ", type: " + \
-            self.get_type() + ", length: " + str(self.length) + ", data: " + data
+            self.get_type() + ", length: " + str(self.length)
 
         return string_rep
 

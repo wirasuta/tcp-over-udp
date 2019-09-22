@@ -10,6 +10,24 @@ MAX_PACKET_SIZE = 33000
 
 # TODO: Check for packet completeness
 # TODO: File sequencing and sequencing
+# Each file id recieve should have its own thread (?)
+
+
+class TCPRecvThread(Thread):
+    def __init__(self):
+        pass
+
+    def run(self):
+        pass
+
+
+class TCPRecv:
+    def __init__(self, dest, timeout, files):
+        pass
+
+    @staticmethod
+    def packets_to_file(filename):
+        pass
 
 
 def handler(sock, addr, data):
@@ -18,8 +36,9 @@ def handler(sock, addr, data):
 
     reply_type = 'ACK' if recv_packet.get_type() == 'DATA' else 'FIN-ACK'
     packet_id = recv_packet.id
+    packet_seq = recv_packet.seq
 
-    reply_packet = Packet(reply_type, packet_id, 0, 0, '')
+    reply_packet = Packet(reply_type, packet_id, packet_seq, 0, '')
     sock.sendto(reply_packet.to_bytes(), addr)
     print(f'{addr} <- {str(reply_packet)}')
 
