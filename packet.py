@@ -1,4 +1,5 @@
 from random import randint
+from pickle import dumps, loads
 
 
 class Packet():
@@ -23,8 +24,14 @@ class Packet():
         return cmp((self.seq, self.id), (other.seq, other.id))
 
     def __str__(self):
+        if (type(self.data) == 'string'):
+            data = self.data
+        else:
+            data = self.data.decode('UTF-8')
+
         string_rep = "seq: " + str(self.seq) + ", id: " + str(self.id) + ", type: " + \
-            self.get_type() + ", length: " + str(self.length) + ", data: " + self.data
+            self.get_type() + ", length: " + str(self.length) + ", data: " + data
+
         return string_rep
 
     def get_type(self):
@@ -37,29 +44,40 @@ class Packet():
         elif self.p_type == 0x3:
             return 'FIN-ACK'
 
-    @staticmethod
-    def pick_id():
+    def to_bytes(self):
+        return dumps(self)
+
+    @classmethod
+    def pick_id(cls):
         min_id = 0
         max_id = 14
-        exclude = Packet.unacknowledged_packets
+        exclude = cls.unacknowledged_packets
         rand_int_id = randint(min_id, max_id)
         while rand_int_id in exclude:
             rand_int_id = randint(min_id, max_id)
         return rand_int_id
 
     @staticmethod
+    def from_bytes(packet_bytes):
+        return loads(packet_bytes)
+
+    @staticmethod
     def checksum(packet):
         checksum = 0
+
         type_binary = format(packet.p_type, '#010b')
         id_binary = format(packet.id, '#010b')
-        print(type_binary+id_binary[2:])
-        temp = int(type_binary+id_binary[2:], 2)
-        checksum = temp ^ checksum
+        type_id_binary = int(type_binary+id_binary[2:], 2)
+        checksum = type_id_binary ^ checksum
+
         checksum = packet.length ^ checksum
-        temp_data = int.from_bytes(
-            packet.data.encode('UTF-8'), byteorder='big')
+
+        if (type(packet.data) == 'string'):
+            temp_data = packet.data.encode('UTF-8')
+        else:
+            temp_data = packet.data
+        temp_data = int.from_bytes(temp_data, byteorder='big')
         while(temp_data):
-            # temp_data_bin = format(temp_data, '#018b')
             temp_data_bin = temp_data & 0xffff
             checksum = temp_data_bin ^ checksum
             temp_data = temp_data >> 16
