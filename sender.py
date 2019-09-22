@@ -13,6 +13,14 @@ MAX_PACKET_SIZE = 33000
 
 
 class TCPSendThread(Thread):
+    """
+    Thread for emulating TCP send of single file by doing these things:
+    1. Bind to specific address, each file will bind to different port
+    2. Send all packet
+    3. Check after timeout if any packet is not acknowledged
+    4. Retry sending unacknowledged packet
+    """
+
     def __init__(self, src, dest, timeout, packets, event):
         Thread.__init__(self)
         self.stopped = event
@@ -40,7 +48,7 @@ class TCPSendThread(Thread):
                 for unacknowledged_packet in self.unacknowledged_packets:
                     sock.sendto(
                         unacknowledged_packet.to_bytes(), self.dest)
-                    print(f'{self.dest} <- RETR - {unacknowledged_packet}')
+                    print(f'{self.dest} <- RETRY - {unacknowledged_packet}')
 
             ack_thread.join()
 
@@ -48,6 +56,11 @@ class TCPSendThread(Thread):
 
 
 class TCPAckThread(Thread):
+    """
+    Thread for handling acknowledgement by removing packets
+    from unacknowledged_packets list and stop on FIN-ACK
+    """
+
     def __init__(self, pid, unacknowledged_packets, sock):
         Thread.__init__(self)
         self.stopped = Event()
@@ -71,14 +84,21 @@ class TCPAckThread(Thread):
 
 
 class TCPSend:
+    """
+    Emulate TCP sending by splitting files into packets 
+    and spawning a send thread for each file
+    """
+
     def __init__(self, dest, timeout, files):
         all_packets = []
+
         for file_to_split in files:
             all_packets.append(list(self.file_to_packets(file_to_split)))
 
         stop_flags = []
         send_threads = []
         base_port = randint(1025, 13336)
+
         for idx, single_file_packets in enumerate(all_packets):
             stop_flag = Event()
             stop_flags.append(stop_flag)
@@ -92,7 +112,6 @@ class TCPSend:
 
         for idx, thread in enumerate(send_threads):
             thread.join()
-            print(f'[i] Thread {idx} done!')
 
     @staticmethod
     def file_to_packets(filename):
@@ -101,6 +120,7 @@ class TCPSend:
                 pid = Packet.pick_id()
                 seq = 0
                 chunk = file_to_split.read(MAX_DATA_SIZE)
+
                 while chunk:
                     next_chunk = file_to_split.read(MAX_DATA_SIZE)
                     if next_chunk:
@@ -120,6 +140,7 @@ if __name__ == '__main__':
     dest = (dest_ip.strip(), int(dest_port.strip()))
 
     timeout = float(input('Timeout (s): '))
+
     files = input('Files to send (Separated by comma): ')
     files = [f.strip() for f in files.split(',')]
 
