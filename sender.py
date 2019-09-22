@@ -7,13 +7,9 @@ from itertools import chain, islice
 from random import randint
 
 HOST = '127.0.0.1'
-PORT = 14045
 
 MAX_DATA_SIZE = 32768
 MAX_PACKET_SIZE = 33000
-MESSAGE = b'A' * 16
-MESSAGE2 = b'B' * 32
-MESSAGE3 = b'C' * 32768
 
 
 class TCPSendThread(Thread):
@@ -65,7 +61,9 @@ class TCPAckThread(Thread):
             ack_packet = Packet.from_bytes(data)
             print(f'{addr} -> {ack_packet}')
 
-            self.unacknowledged_packets.remove(ack_packet)
+            if ack_packet in self.unacknowledged_packets:
+                self.unacknowledged_packets.remove(ack_packet)
+
             if (ack_packet.get_type() == 'FIN-ACK'):
                 self.stopped.set()
 
@@ -119,7 +117,7 @@ class TCPSend:
 if __name__ == '__main__':
     dest_ip = input('Enter destination (IP): ')
     dest_port = input('Enter destination (Port): ')
-    dest = tuple([dest_ip.strip(), int(dest_port.strip())])
+    dest = (dest_ip.strip(), int(dest_port.strip()))
 
     timeout = float(input('Timeout (s): '))
     files = input('Files to send (Separated by comma): ')

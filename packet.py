@@ -24,6 +24,9 @@ class Packet():
     def __eq__(self, other):
         return self.seq == other.seq and self.id == other.id
 
+    def __lt__(self, other):
+        return self.seq < other.seq or self.id < other.id
+
     def __str__(self):
         string_rep = "seq: " + str(self.seq) + ", id: " + str(self.id) + ", type: " + \
             self.get_type() + ", length: " + str(self.length)
