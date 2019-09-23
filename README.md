@@ -6,6 +6,24 @@ Dalam tugas besar ini, kalian akan meniru tingkah laku TCP (Transmission Control
 
 Dapat terlihat bahwa untuk setiap data yang terkirim, maka receiver akan mengirimkan ACK kepada sender tersebut. Apabila ACK tersebut tidak diterima, maka sender akan mengirimkan data yang sama kembali, hingga seluruh data diterima dengan baik.
 
+Oleh karena itu, anda memerlukan beberapa tipe paket untuk dapat mensimulasikan hal tersebut. Berikut merupakan diagram spesifikasi paket yang akan anda implementasikan.
+
+```
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+|---|---|---|---|---|---|---|---|
+| TYPE (4 bits) |  ID (4 bits)  |
+|---|---|---|---|---|---|---|---|
+|   SEQUENCE NUMBER (16 bits)   |
+|---|---|---|---|---|---|---|---|
+|       LENGTH (16 bits)        |
+|---|---|---|---|---|---|---|---|
+|      CHECKSUM (16 bits)       |
+|---|---|---|---|---|---|---|---|
+|             DATA              |
+|           MAX 32KB            |
+|---|---|---|---|---|---|---|---|
+```
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and deployment purposes.
