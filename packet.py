@@ -1,5 +1,6 @@
 from random import randint
 from pickle import dumps, loads
+from struct import unpack
 
 
 class Packet():
@@ -29,7 +30,8 @@ class Packet():
 
     def __str__(self):
         string_rep = "seq: " + str(self.seq) + ", id: " + str(self.id) + ", type: " + \
-            self.get_type() + ", length: " + str(self.length)
+            self.get_type() + ", length: " + str(self.length) + \
+            ", checksum: " + str(self.checksum)
 
         return string_rep
 
@@ -50,7 +52,22 @@ class Packet():
             return Packet('ACK', self.id, self.seq, 0, '')
 
     def to_bytes(self):
-        return dumps(self)
+        type_binary = format(self.p_type, '#06b')[2:]
+        id_binary = format(self.id, '#06b')[2:]
+        seq_binary = format(self.seq, '#018b')[2:]
+        len_binary = format(self.length, '#018b')[2:]
+        checksum_binary = format(self.checksum, '#018b')[2:]
+
+        head_binary = type_binary + id_binary + \
+            seq_binary + len_binary + checksum_binary
+
+        if (isinstance(self.data, str)):
+            data_byte = self.data.encode('UTF-8')
+        else:
+            data_byte = self.data
+
+        packet = int(head_binary, 2).to_bytes(7, byteorder='big') + data_byte
+        return packet
 
     @classmethod
     def pick_id(cls):
@@ -64,7 +81,27 @@ class Packet():
 
     @staticmethod
     def from_bytes(packet_bytes):
-        return loads(packet_bytes)
+        head_byte = packet_bytes[:7]
+        head_unpacked = unpack('>c3H', head_byte)
+
+        p_type = (int.from_bytes(head_unpacked[0], byteorder='big') >> 4) & 0xf
+        pid = int.from_bytes(head_unpacked[0], byteorder='big') & 0xf
+        seq = head_unpacked[1]
+        length = head_unpacked[2]
+        checksum = head_unpacked[3]
+
+        data = packet_bytes[7:]
+
+        if p_type == 0x0:
+            str_type = 'DATA'
+        elif p_type == 0x1:
+            str_type = 'ACK'
+        elif p_type == 0x2:
+            str_type = 'FIN'
+        elif p_type == 0x3:
+            str_type = 'FIN-ACK'
+
+        return Packet(str_type, pid, seq, length, data)
 
     @staticmethod
     def checksum(packet):
@@ -86,3 +123,5 @@ class Packet():
             temp_data_bin = temp_data & 0xffff
             checksum = temp_data_bin ^ checksum
             temp_data = temp_data >> 16
+
+        return checksum
