@@ -10,6 +10,7 @@ HOST = '127.0.0.1'
 
 MAX_DATA_SIZE = 32768
 MAX_PACKET_SIZE = 33000
+MAX_SINGLE_SEND = 5
 
 
 class TCPSendThread(Thread):
@@ -38,17 +39,17 @@ class TCPSendThread(Thread):
                 self.pid, self.unacknowledged_packets, sock)
             ack_thread.start()
 
-            for unacknowledged_packet in self.unacknowledged_packets:
+            for unacknowledged_packet in self.unacknowledged_packets[:MAX_SINGLE_SEND]:
                 sock.sendto(unacknowledged_packet.to_bytes(), self.dest)
                 print(f'{self.dest} <- {unacknowledged_packet}')
 
             while not self.stopped.wait(self.timeout):
                 if len(self.unacknowledged_packets) == 0:
                     self.stopped.set()
-                for unacknowledged_packet in self.unacknowledged_packets:
+                for unacknowledged_packet in self.unacknowledged_packets[:MAX_SINGLE_SEND]:
                     sock.sendto(
                         unacknowledged_packet.to_bytes(), self.dest)
-                    print(f'{self.dest} <- RETRY - {unacknowledged_packet}')
+                    print(f'{self.dest} <- {unacknowledged_packet}')
 
             ack_thread.join()
 
