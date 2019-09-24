@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import socket
+import socket, sys
+from time import sleep
 from threading import Thread, Event, Lock
 from packet import Packet
 from itertools import chain, islice
@@ -22,7 +23,7 @@ class TCPSendThread(Thread):
     4. Retry sending unacknowledged packet
     """
 
-    def __init__(self, src, dest, timeout, packets, event):
+    def __init__(self, src, dest, timeout, packets, event, n_transfered, n_total):
         Thread.__init__(self)
         self.stopped = event
         self.src = src
@@ -30,6 +31,8 @@ class TCPSendThread(Thread):
         self.timeout = timeout
         self.unacknowledged_packets = packets
         self.pid = self.unacknowledged_packets[0].id
+        self.n_transfered = n_transfered
+        self.n_total = n_total
 
     def run(self):
         with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
@@ -41,7 +44,16 @@ class TCPSendThread(Thread):
 
             for unacknowledged_packet in self.unacknowledged_packets[:MAX_SINGLE_SEND]:
                 sock.sendto(unacknowledged_packet.to_bytes(), self.dest)
-                print(f'{self.dest} <- {unacknowledged_packet}')
+                # print(f'{self.dest} <- {unacknowledged_packet}')
+                self.n_transfered = self.n_transfered + 1
+                # write to progress bar:
+                sys.stdout.write('\r')
+                sys.stdout.write("[{}-{}] {}/{}".format('='*self.n_transfered, self.n_total, self.n_transfered, self.n_total))
+                sys.stdout.flush()
+
+                f = open("log.txt", "a")
+                f.write(f'{self.dest} <- {unacknowledged_packet}' + '\n')
+                f.close()
 
             while not self.stopped.wait(self.timeout):
                 if len(self.unacknowledged_packets) == 0:
@@ -49,12 +61,17 @@ class TCPSendThread(Thread):
                 for unacknowledged_packet in self.unacknowledged_packets[:MAX_SINGLE_SEND]:
                     sock.sendto(
                         unacknowledged_packet.to_bytes(), self.dest)
-                    print(f'{self.dest} <- {unacknowledged_packet}')
+                    # print(f'{self.dest} <- {unacknowledged_packet}')
+                    f = open("log.txt", "a")
+                    f.write(f'{self.dest} <- {unacknowledged_packet}' + '\n')
+                    f.close()
 
             ack_thread.join()
 
-        print(f'[i] All package for id {self.pid} sent!')
-
+        # print(f'[i] All package for id {self.pid} sent!')
+        f = open("log.txt", "a")
+        f.write(f'[i] All package for id {self.pid} sent!' + '\n')
+        f.close()
 
 class TCPAckThread(Thread):
     """
@@ -73,7 +90,10 @@ class TCPAckThread(Thread):
         while not self.stopped.is_set():
             data, addr = self.sock.recvfrom(MAX_PACKET_SIZE)
             ack_packet = Packet.from_bytes(data)
-            print(f'{addr} -> {ack_packet}')
+            # print(f'{addr} -> {ack_packet}')
+            f = open("log.txt", "a")
+            f.write(f'{addr} -> {ack_packet}' + '\n')
+            f.close()
 
             if ack_packet in self.unacknowledged_packets:
                 self.unacknowledged_packets.remove(ack_packet)
@@ -81,8 +101,10 @@ class TCPAckThread(Thread):
             if (ack_packet.get_type() == 'FIN-ACK'):
                 self.stopped.set()
 
-        print(f'[i] All package for id {self.pid} acknowledged!')
-
+        # print(f'[i] All package for id {self.pid} acknowledged!')
+        f = open("log.txt", "a")
+        f.write(f'[i] All package for id {self.pid} acknowledged!' + '\n')
+        f.close()
 
 class TCPSend:
     """
@@ -92,9 +114,21 @@ class TCPSend:
 
     def __init__(self, dest, timeout, files):
         all_packets = []
+        length_of_packets = 0
+        n_transfered = 0
 
         for file_to_split in files:
-            all_packets.append(list(self.file_to_packets(file_to_split)))
+            splitted_files = list(self.file_to_packets(file_to_split))
+            all_packets.append(splitted_files)
+            length_of_packets = length_of_packets + len(splitted_files)
+
+        print("length of packets : ")
+        print(length_of_packets)
+        
+        # write to progress bar:
+        sys.stdout.write('\r')
+        sys.stdout.write("[{}-{}s] {}/{}".format('='*n_transfered, length_of_packets, n_transfered, length_of_packets))
+        sys.stdout.flush()
 
         stop_flags = []
         send_threads = []
@@ -107,7 +141,7 @@ class TCPSend:
             src = (HOST, base_port + idx)
 
             send_thread = TCPSendThread(
-                src, dest, timeout, single_file_packets, stop_flag)
+                src, dest, timeout, single_file_packets, stop_flag, n_transfered, length_of_packets)
             send_threads.append(send_thread)
             send_thread.start()
 
@@ -144,5 +178,10 @@ if __name__ == '__main__':
 
     files = input('Files to send (Separated by comma): ')
     files = [f.strip() for f in files.split(',')]
+
+    # for i in range(20):
+    #     bar.update(i+1)
+    #     sleep(0.1)
+    #     bar.finish()
 
     TCPSend(dest, timeout, files)
