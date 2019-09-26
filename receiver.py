@@ -4,7 +4,7 @@ import socket
 from threading import Thread, Lock
 from packet import Packet
 
-HOST = '0.0.0.0'  # Standard loopback interface address (localhost)
+HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
 MAX_PACKET_SIZE = 33000
 
 add_packet_lock = Lock()

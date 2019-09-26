@@ -1,74 +1,108 @@
-('127.0.0.1', 7000) <- seq: 0, id: 12, type: DATA, length: 32768, checksum: 59745
-('127.0.0.1', 7000) <- seq: 1, id: 12, type: FIN, length: 24925, checksum: 64547
-('127.0.0.1', 7000) -> seq: 0, id: 12, type: ACK, length: 0, checksum: 268
-('127.0.0.1', 7000) <- seq: 0, id: 3, type: DATA, length: 32768, checksum: 59758
-('127.0.0.1', 7000) <- seq: 1, id: 3, type: FIN, length: 24925, checksum: 64556
-('127.0.0.1', 7000) -> seq: 0, id: 3, type: ACK, length: 0, checksum: 259
-('127.0.0.1', 7000) <- seq: 0, id: 8, type: DATA, length: 32768, checksum: 59749
-('127.0.0.1', 7000) <- seq: 1, id: 8, type: FIN, length: 24925, checksum: 64551
-('127.0.0.1', 7000) <- seq: 0, id: 10, type: DATA, length: 32768, checksum: 59751
-('127.0.0.1', 7000) <- seq: 1, id: 10, type: FIN, length: 24925, checksum: 64549
+('127.0.0.1', 7000) <- seq: 0, id: 0, type: DATA, length: 32768, checksum: 59757
+('127.0.0.1', 7000) <- seq: 0, id: 13, type: DATA, length: 32768, checksum: 59744
+('127.0.0.1', 7000) <- seq: 0, id: 8, type: FIN, length: 6518, checksum: 17211
+('127.0.0.1', 7000) <- seq: 1, id: 0, type: FIN, length: 24925, checksum: 64559
+('127.0.0.1', 7000) <- seq: 1, id: 13, type: FIN, length: 24925, checksum: 64546
+('127.0.0.1', 7000) -> seq: 0, id: 8, type: FIN-ACK, length: 0, checksum: 776
+[i] All package for id 8 acknowledged!
+('127.0.0.1', 7000) -> seq: 0, id: 0, type: ACK, length: 0, checksum: 256
+('127.0.0.1', 7000) -> seq: 0, id: 13, type: ACK, length: 0, checksum: 269
+('127.0.0.1', 7000) <- seq: 1, id: 13, type: FIN, length: 24925, checksum: 64546
+[i] All package for id 8 sent!
+('127.0.0.1', 7000) <- seq: 1, id: 0, type: FIN, length: 24925, checksum: 64559
+('127.0.0.1', 7000) -> seq: 1, id: 13, type: FIN-ACK, length: 0, checksum: 781
+[i] All package for id 13 acknowledged!
+('127.0.0.1', 7000) -> seq: 1, id: 0, type: FIN-ACK, length: 0, checksum: 768
+[i] All package for id 0 acknowledged!
+[i] All package for id 0 sent!
+[i] All package for id 13 sent!
 ('127.0.0.1', 7000) <- seq: 0, id: 9, type: DATA, length: 32768, checksum: 59748
+('127.0.0.1', 7000) <- seq: 0, id: 5, type: FIN, length: 6518, checksum: 17206
 ('127.0.0.1', 7000) <- seq: 1, id: 9, type: FIN, length: 24925, checksum: 64550
-('127.0.0.1', 7000) <- seq: 0, id: 0, type: DATA, length: 32768, checksum: 59757
-('127.0.0.1', 7000) <- seq: 1, id: 0, type: FIN, length: 24925, checksum: 64559
-('127.0.0.1', 7000) <- seq: 0, id: 0, type: DATA, length: 32768, checksum: 59757
-('127.0.0.1', 7000) <- seq: 1, id: 0, type: FIN, length: 24925, checksum: 64559
 ('127.0.0.1', 7000) <- seq: 0, id: 6, type: DATA, length: 32768, checksum: 59755
 ('127.0.0.1', 7000) <- seq: 1, id: 6, type: FIN, length: 24925, checksum: 64553
-('127.0.0.1', 7000) <- seq: 0, id: 6, type: DATA, length: 32768, checksum: 59755
+('127.0.0.1', 7000) -> seq: 0, id: 5, type: FIN-ACK, length: 0, checksum: 773
+[i] All package for id 5 acknowledged!
+('127.0.0.1', 7000) -> seq: 0, id: 9, type: ACK, length: 0, checksum: 265
+('127.0.0.1', 7000) -> seq: 0, id: 6, type: ACK, length: 0, checksum: 262
 ('127.0.0.1', 7000) <- seq: 1, id: 6, type: FIN, length: 24925, checksum: 64553
+[i] All package for id 5 sent!
+('127.0.0.1', 7000) <- seq: 1, id: 9, type: FIN, length: 24925, checksum: 64550
+('127.0.0.1', 7000) -> seq: 1, id: 6, type: FIN-ACK, length: 0, checksum: 774
+[i] All package for id 6 acknowledged!
+('127.0.0.1', 7000) -> seq: 1, id: 9, type: FIN-ACK, length: 0, checksum: 777
+[i] All package for id 9 acknowledged!
+[i] All package for id 6 sent!
+[i] All package for id 9 sent!
+('127.0.0.1', 7000) <- seq: 0, id: 3, type: DATA, length: 32768, checksum: 59758
+('127.0.0.1', 7000) <- seq: 0, id: 6, type: FIN, length: 6518, checksum: 17205
+('127.0.0.1', 7000) <- seq: 0, id: 8, type: DATA, length: 32768, checksum: 59749
+('127.0.0.1', 7000) <- seq: 1, id: 3, type: FIN, length: 24925, checksum: 64556
+('127.0.0.1', 7000) <- seq: 1, id: 8, type: FIN, length: 24925, checksum: 64551
+('127.0.0.1', 7000) -> seq: 0, id: 6, type: FIN-ACK, length: 0, checksum: 774
+[i] All package for id 6 acknowledged!
+('127.0.0.1', 7000) -> seq: 0, id: 3, type: ACK, length: 0, checksum: 259
+('127.0.0.1', 7000) -> seq: 0, id: 8, type: ACK, length: 0, checksum: 264
+[i] All package for id 6 sent!
+('127.0.0.1', 7000) <- seq: 1, id: 8, type: FIN, length: 24925, checksum: 64551
+('127.0.0.1', 7000) <- seq: 1, id: 3, type: FIN, length: 24925, checksum: 64556
+('127.0.0.1', 7000) -> seq: 1, id: 8, type: FIN-ACK, length: 0, checksum: 776
+[i] All package for id 8 acknowledged!
+('127.0.0.1', 7000) -> seq: 1, id: 3, type: FIN-ACK, length: 0, checksum: 771
+[i] All package for id 3 acknowledged!
+[i] All package for id 8 sent!
+[i] All package for id 3 sent!
+('127.0.0.1', 7000) <- seq: 0, id: 3, type: DATA, length: 32768, checksum: 59758
 ('127.0.0.1', 7000) <- seq: 0, id: 1, type: DATA, length: 32768, checksum: 59756
+('127.0.0.1', 7000) <- seq: 0, id: 5, type: FIN, length: 6518, checksum: 17206
 ('127.0.0.1', 7000) <- seq: 1, id: 1, type: FIN, length: 24925, checksum: 64558
-('127.0.0.1', 7000) <- seq: 0, id: 12, type: DATA, length: 32768, checksum: 59745
-('127.0.0.1', 7000) <- seq: 1, id: 12, type: FIN, length: 24925, checksum: 64547
-('127.0.0.1', 7000) <- seq: 0, id: 1, type: DATA, length: 32768, checksum: 59756
-('127.0.0.1', 7000) <- seq: 0, id: 12, type: DATA, length: 32768, checksum: 59745
-('127.0.0.1', 7000) <- seq: 1, id: 12, type: FIN, length: 24925, checksum: 64547
+('127.0.0.1', 7000) <- seq: 1, id: 3, type: FIN, length: 24925, checksum: 64556
+('127.0.0.1', 7000) -> seq: 0, id: 5, type: FIN-ACK, length: 0, checksum: 773
+[i] All package for id 5 acknowledged!
+('127.0.0.1', 7000) -> seq: 0, id: 3, type: ACK, length: 0, checksum: 259
+('127.0.0.1', 7000) -> seq: 0, id: 1, type: ACK, length: 0, checksum: 257
+('127.0.0.1', 7000) <- seq: 1, id: 3, type: FIN, length: 24925, checksum: 64556
 ('127.0.0.1', 7000) <- seq: 1, id: 1, type: FIN, length: 24925, checksum: 64558
-('127.0.0.1', 7000) <- seq: 0, id: 12, type: DATA, length: 32768, checksum: 59745
-('127.0.0.1', 7000) <- seq: 0, id: 1, type: DATA, length: 32768, checksum: 59756
-('127.0.0.1', 7000) <- seq: 1, id: 12, type: FIN, length: 24925, checksum: 64547
-('127.0.0.1', 7000) <- seq: 1, id: 1, type: FIN, length: 24925, checksum: 64558
-('127.0.0.1', 7000) <- seq: 0, id: 2, type: DATA, length: 32768, checksum: 59759
-('127.0.0.1', 7000) <- seq: 1, id: 2, type: FIN, length: 24925, checksum: 64557
-('127.0.0.1', 7000) <- seq: 0, id: 2, type: DATA, length: 32768, checksum: 59759
-('127.0.0.1', 7000) <- seq: 1, id: 2, type: FIN, length: 24925, checksum: 64557
-('127.0.0.1', 7000) <- seq: 0, id: 2, type: DATA, length: 32768, checksum: 59759
-('127.0.0.1', 7000) <- seq: 1, id: 2, type: FIN, length: 24925, checksum: 64557
-('127.0.0.1', 7000) <- seq: 0, id: 2, type: DATA, length: 32768, checksum: 59759
-('127.0.0.1', 7000) <- seq: 1, id: 2, type: FIN, length: 24925, checksum: 64557
-('127.0.0.1', 7000) <- seq: 0, id: 2, type: DATA, length: 32768, checksum: 59759
-('127.0.0.1', 7000) <- seq: 1, id: 2, type: FIN, length: 24925, checksum: 64557
-('127.0.0.1', 7000) <- seq: 0, id: 2, type: DATA, length: 32768, checksum: 59759
-('127.0.0.1', 7000) <- seq: 1, id: 2, type: FIN, length: 24925, checksum: 64557
-('127.0.0.1', 7000) <- seq: 0, id: 2, type: DATA, length: 32768, checksum: 59759
-('127.0.0.1', 7000) <- seq: 1, id: 2, type: FIN, length: 24925, checksum: 64557
-('127.0.0.1', 7000) <- seq: 0, id: 2, type: DATA, length: 32768, checksum: 59759
-('127.0.0.1', 7000) <- seq: 1, id: 2, type: FIN, length: 24925, checksum: 64557
-('127.0.0.1', 7000) <- seq: 0, id: 2, type: DATA, length: 32768, checksum: 59759
-('127.0.0.1', 7000) <- seq: 1, id: 2, type: FIN, length: 24925, checksum: 64557
-('127.0.0.1', 7000) <- seq: 0, id: 0, type: DATA, length: 32768, checksum: 59757
-('127.0.0.1', 7000) <- seq: 1, id: 0, type: FIN, length: 24925, checksum: 64559
-('127.0.0.1', 7000) <- seq: 0, id: 0, type: DATA, length: 32768, checksum: 59757
-('127.0.0.1', 7000) <- seq: 1, id: 0, type: FIN, length: 24925, checksum: 64559
-('127.0.0.1', 7000) <- seq: 0, id: 0, type: DATA, length: 32768, checksum: 59757
-('127.0.0.1', 7000) <- seq: 1, id: 0, type: FIN, length: 24925, checksum: 64559
-('127.0.0.1', 7000) <- seq: 0, id: 0, type: DATA, length: 32768, checksum: 59757
-('127.0.0.1', 7000) <- seq: 1, id: 0, type: FIN, length: 24925, checksum: 64559
-('127.0.0.1', 7000) <- seq: 0, id: 0, type: DATA, length: 32768, checksum: 59757
-('127.0.0.1', 7000) <- seq: 1, id: 0, type: FIN, length: 24925, checksum: 64559
-('127.0.0.1', 7000) <- seq: 0, id: 0, type: DATA, length: 32768, checksum: 59757
-('127.0.0.1', 7000) <- seq: 1, id: 0, type: FIN, length: 24925, checksum: 64559
+[i] All package for id 5 sent!
+('127.0.0.1', 7000) -> seq: 1, id: 1, type: FIN-ACK, length: 0, checksum: 769
+[i] All package for id 1 acknowledged!
+('127.0.0.1', 7000) -> seq: 1, id: 3, type: FIN-ACK, length: 0, checksum: 771
+[i] All package for id 3 acknowledged!
+[i] All package for id 1 sent!
+[i] All package for id 3 sent!
+('127.0.0.1', 7000) <- seq: 0, id: 7, type: DATA, length: 32768, checksum: 59754
+('127.0.0.1', 7000) <- seq: 0, id: 3, type: DATA, length: 32768, checksum: 59758
+('127.0.0.1', 7000) <- seq: 0, id: 8, type: FIN, length: 6518, checksum: 17211
+('127.0.0.1', 7000) <- seq: 1, id: 7, type: FIN, length: 24925, checksum: 64552
+('127.0.0.1', 7000) <- seq: 1, id: 3, type: FIN, length: 24925, checksum: 64556
+('127.0.0.1', 7000) -> seq: 0, id: 8, type: FIN-ACK, length: 0, checksum: 776
+[i] All package for id 8 acknowledged!
+('127.0.0.1', 7000) -> seq: 0, id: 3, type: ACK, length: 0, checksum: 259
+('127.0.0.1', 7000) -> seq: 0, id: 7, type: ACK, length: 0, checksum: 263
+('127.0.0.1', 7000) <- seq: 1, id: 3, type: FIN, length: 24925, checksum: 64556
+[i] All package for id 8 sent!
+('127.0.0.1', 7000) <- seq: 1, id: 7, type: FIN, length: 24925, checksum: 64552
+('127.0.0.1', 7000) -> seq: 1, id: 7, type: FIN-ACK, length: 0, checksum: 775
+[i] All package for id 7 acknowledged!
+('127.0.0.1', 7000) -> seq: 1, id: 3, type: FIN-ACK, length: 0, checksum: 771
+[i] All package for id 3 acknowledged!
+[i] All package for id 7 sent!
+[i] All package for id 3 sent!
+('127.0.0.1', 7000) <- seq: 0, id: 6, type: DATA, length: 32768, checksum: 59755
+('127.0.0.1', 7000) <- seq: 0, id: 14, type: FIN, length: 6518, checksum: 17213
 ('127.0.0.1', 7000) <- seq: 0, id: 13, type: DATA, length: 32768, checksum: 59744
 ('127.0.0.1', 7000) <- seq: 1, id: 13, type: FIN, length: 24925, checksum: 64546
-('127.0.0.1', 7000) <- seq: 0, id: 13, type: DATA, length: 32768, checksum: 59744
+('127.0.0.1', 7000) <- seq: 1, id: 6, type: FIN, length: 24925, checksum: 64553
+('127.0.0.1', 7000) -> seq: 0, id: 14, type: FIN-ACK, length: 0, checksum: 782
+[i] All package for id 14 acknowledged!
+('127.0.0.1', 7000) -> seq: 0, id: 6, type: ACK, length: 0, checksum: 262
+('127.0.0.1', 7000) -> seq: 0, id: 13, type: ACK, length: 0, checksum: 269
+('127.0.0.1', 7000) <- seq: 1, id: 6, type: FIN, length: 24925, checksum: 64553
+[i] All package for id 14 sent!
 ('127.0.0.1', 7000) <- seq: 1, id: 13, type: FIN, length: 24925, checksum: 64546
-('127.0.0.1', 7000) <- seq: 0, id: 13, type: DATA, length: 32768, checksum: 59744
-('127.0.0.1', 7000) <- seq: 1, id: 13, type: FIN, length: 24925, checksum: 64546
-('127.0.0.1', 7000) <- seq: 0, id: 10, type: DATA, length: 32768, checksum: 59751
-('127.0.0.1', 7000) <- seq: 1, id: 10, type: FIN, length: 24925, checksum: 64549
-('127.0.0.1', 7000) <- seq: 0, id: 10, type: DATA, length: 32768, checksum: 59751
-('127.0.0.1', 7000) <- seq: 1, id: 10, type: FIN, length: 24925, checksum: 64549
-('127.0.0.1', 7000) <- seq: 0, id: 10, type: DATA, length: 32768, checksum: 59751
-('127.0.0.1', 7000) <- seq: 1, id: 10, type: FIN, length: 24925, checksum: 64549
+('127.0.0.1', 7000) -> seq: 1, id: 6, type: FIN-ACK, length: 0, checksum: 774
+[i] All package for id 6 acknowledged!
+('127.0.0.1', 7000) -> seq: 1, id: 13, type: FIN-ACK, length: 0, checksum: 781
+[i] All package for id 13 acknowledged!
+[i] All package for id 6 sent!
+[i] All package for id 13 sent!
