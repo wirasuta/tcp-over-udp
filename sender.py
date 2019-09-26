@@ -22,7 +22,6 @@ class TCPSendThread(Thread):
     3. Check after timeout if any packet is not acknowledged
     4. Retry sending unacknowledged packet
     """
-
     def __init__(self, src, dest, timeout, packets, event, n_transfered, n_total):
         Thread.__init__(self)
         self.stopped = event
